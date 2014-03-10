@@ -1,16 +1,16 @@
 --------------------------------------------------------------------------------
--- Company: 	USAFA
--- Engineer:	Kevin Jagoda
+-- Company: 
+-- Engineer:
 --
--- Create Date:   22:04:28 03/06/2014
+-- Create Date:   08:21:54 03/10/2014
 -- Design Name:   
--- Module Name:   C:/Users/C15Kevin.Jagoda/Desktop/USAFA/ECE281/Labs/CE3_Jagoda/Moore_testbench_Jagoda.vhd
+-- Module Name:   C:/Users/C15Kevin.Jagoda/Desktop/USAFA/ECE281/Labs/CE3_Jagoda/Mealy_testbench_Jagoda.vhd
 -- Project Name:  CE3_Jagoda
 -- Target Device:  
 -- Tool versions:  
 -- Description:   
 -- 
--- VHDL Test Bench Created by ISE for module: MooreElevatorController_Shell
+-- VHDL Test Bench Created by ISE for module: MealyElevatorController_Shell
 -- 
 -- Dependencies:
 -- 
@@ -32,20 +32,21 @@ USE ieee.std_logic_1164.ALL;
 -- arithmetic functions with Signed or Unsigned values
 --USE ieee.numeric_std.ALL;
  
-ENTITY Moore_testbench_Jagoda IS
-END Moore_testbench_Jagoda;
+ENTITY Mealy_testbench_Jagoda IS
+END Mealy_testbench_Jagoda;
  
-ARCHITECTURE behavior OF Moore_testbench_Jagoda IS 
+ARCHITECTURE behavior OF Mealy_testbench_Jagoda IS 
  
     -- Component Declaration for the Unit Under Test (UUT)
  
-    COMPONENT MooreElevatorController_Shell
+    COMPONENT MealyElevatorController_Shell
     PORT(
          clk : IN  std_logic;
          reset : IN  std_logic;
          stop : IN  std_logic;
          up_down : IN  std_logic;
-         floor : OUT  std_logic_vector(3 downto 0)
+         floor : OUT  std_logic_vector(3 downto 0);
+         nextfloor : OUT  std_logic_vector(3 downto 0)
         );
     END COMPONENT;
     
@@ -58,6 +59,7 @@ ARCHITECTURE behavior OF Moore_testbench_Jagoda IS
 
  	--Outputs
    signal floor : std_logic_vector(3 downto 0);
+   signal nextfloor : std_logic_vector(3 downto 0);
 
    -- Clock period definitions
    constant clk_period : time := 10 ns;
@@ -65,15 +67,16 @@ ARCHITECTURE behavior OF Moore_testbench_Jagoda IS
 BEGIN
  
 	-- Instantiate the Unit Under Test (UUT)
-   uut: MooreElevatorController_Shell PORT MAP (
+   uut: MealyElevatorController_Shell PORT MAP (
           clk => clk,
           reset => reset,
           stop => stop,
           up_down => up_down,
-          floor => floor
+          floor => floor,
+          nextfloor => nextfloor
         );
 
-   -- Clock process definitions
+      -- Clock process definitions
    clk_process :process
    begin
 		clk <= '0';
@@ -132,10 +135,7 @@ BEGIN
 		stop<='0';
 		
 
-      wait for clk_period;
-		
-
-      -- insert stimulus here 
+      wait for clk_period; 
 
       wait;
    end process;
